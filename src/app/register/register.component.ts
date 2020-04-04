@@ -9,7 +9,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
 
-    usersRoles: [
+
+    public usersRoles: Array<any> = [
         'doctor',
         'nurse',
         'admin'
