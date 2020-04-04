@@ -1,0 +1,61 @@
+<mat-grid-list cols="1" rowHeight="500px">
+  <mat-grid-tile>
+    <mat-card class="example-card">
+      <form [formGroup]="registerForm" class="registerForm" id="registerForm" (ngSubmit)="onRegister()">
+        <mat-card-content>
+          <mat-card-header>
+            <mat-card-title>Angular Assignment</mat-card-title>
+            <mat-card-subtitle>Register</mat-card-subtitle>
+          </mat-card-header>
+          <mat-form-field class="example-full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First Name" formControlName="firstName" name="firstName">
+          </mat-form-field>
+          <mat-error>
+            <span *ngIf="firstName.invalid && firstName.touched && firstName.errors.required">Please enter first
+              name</span>
+          </mat-error>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Last Name" formControlName="lastName" name="lastName">
+          </mat-form-field>
+          <mat-error>
+            <span *ngIf="lastName.invalid && lastName.touched && lastName.errors.required">Please enter last
+              name</span>
+          </mat-error>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" value="">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" value="">
+          </mat-form-field>
+
+
+          <label id="example-radio-group-label">Pick your favorite season</label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+            <mat-radio-button class="example-radio-button" value="season">
+              test
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="season">
+              tes2
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="season">
+              test3
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="season">
+              test4
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button>Register</button>
+          <a routerLink="/"><button mat-raised-button color="primary">Login</button></a>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
