@@ -57,8 +57,8 @@
           </mat-error>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button>Register</button>
-          <a routerLink="/"><button mat-raised-button color="primary">Login</button></a>
+            <button mat-raised-button color="primary" [disabled]="!registerForm.valid">Submit</button>
+            <button type="button" mat-raised-button color="primary" routerLink="/">Login</button>
         </mat-card-actions>
       </form>
     </mat-card>
