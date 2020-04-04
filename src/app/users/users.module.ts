@@ -15,6 +15,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -32,7 +34,10 @@ import { MatInputModule } from '@angular/material/input';
         MatSliderModule,
         MatGridListModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatRadioModule,
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class UsersModule { }
