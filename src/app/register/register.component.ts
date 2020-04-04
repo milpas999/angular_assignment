@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { ProviderServiceService } from './../shared/services/provider-service.service';
+import { UserServiceService } from './../shared/services/user-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
@@ -17,13 +20,19 @@ export class RegisterComponent implements OnInit {
     ];
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private providerService: ProviderServiceService,
+        private userService: UserServiceService,
+        private router: Router
     ) {
         this.initForm();
     }
 
 
     ngOnInit(): void {
+        if (this.userService.isLoggedIn()) {
+            this.router.navigate(['/users']);
+        }
     }
 
     initForm() {
@@ -51,8 +60,19 @@ export class RegisterComponent implements OnInit {
         if (!this.registerForm.valid) {
             return;
         }
-        // API CALL
-        // this.applyLogin(this.loginForm.get('email').value, this.loginForm.get('password').value);
+        this.providerService.register(
+            this.registerForm.get('firstName').value,
+            this.registerForm.get('lastName').value,
+            this.registerForm.get('email').value,
+            this.registerForm.get('password').value,
+            this.registerForm.get('role').value,
+        ).subscribe(data => {
+            if (!data.Status) {
+                this.router.navigate(['/users']);
+            } else {
+                alert(data.Message);
+            }
+        });
     }
 
 }

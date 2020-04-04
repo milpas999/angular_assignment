@@ -1,5 +1,8 @@
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ProviderServiceService } from '../shared/services/provider-service.service';
+import { UserServiceService } from '../shared/services/user-service.service';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +14,10 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private providerService: ProviderServiceService,
+        private userService: UserServiceService,
+        private router: Router
     ) {
         this.initForm();
     }
@@ -23,11 +29,14 @@ export class LoginComponent implements OnInit {
     ];
 
     ngOnInit(): void {
+        if (this.userService.isLoggedIn()) {
+            this.router.navigate(['/users']);
+        }
     }
 
     initForm() {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required, Validators.email],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
     }
@@ -42,7 +51,17 @@ export class LoginComponent implements OnInit {
             return;
         }
         // API CALL for Login
-        // this.applyLogin(this.loginForm.get('email').value, this.loginForm.get('password').value);
+        this.providerService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
+            .subscribe(data => {
+                if (!data.Status) {
+                    this.userService.setAccessToken(data.Result.loginToken);
+                    this.userService.setUserRole(data.Result.roles);
+                    this.userService.setCurrentUserData(data.Result);
+                    this.router.navigate(['/users']);
+                } else {
+                    alert(data.Message);
+                }
+            });
     }
 
 }

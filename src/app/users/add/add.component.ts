@@ -1,5 +1,7 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ProviderServiceService } from '../../shared/services/provider-service.service';
 
 @Component({
     selector: 'app-add',
@@ -17,7 +19,9 @@ export class AddComponent implements OnInit {
     ];
 
     constructor(
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private providerService: ProviderServiceService,
+        private router: Router
     ) {
         this.initForm();
     }
@@ -50,8 +54,19 @@ export class AddComponent implements OnInit {
         if (!this.addUserForm.valid) {
             return;
         }
-        // API CALL
-        // this.applyLogin(this.loginForm.get('email').value, this.loginForm.get('password').value);
+        this.providerService.addUser(
+            this.addUserForm.get('firstName').value,
+            this.addUserForm.get('lastName').value,
+            this.addUserForm.get('email').value,
+            this.addUserForm.get('password').value,
+            this.addUserForm.get('role').value,
+        ).subscribe(data => {
+            if (!data.Status) {
+                this.router.navigate(['/users']);
+            } else {
+                alert(data.Message);
+            }
+        });
     }
 
 }
